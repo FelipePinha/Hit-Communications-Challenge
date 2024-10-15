@@ -1,16 +1,23 @@
 import fastify from "fastify";
-import type { FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 import { CreateTodoRequest } from "../types/request";
 import { createTodo } from "../functions/create-todo";
+import { listTodos } from "../functions/list-todos";
 
 const app = fastify()
 
-app.post('/tasks', async (req: FastifyRequest<{Body: CreateTodoRequest}>, rep) => {
+app.get('/tasks', async (_, reply: FastifyReply) => {
+    const todos = await listTodos()
+
+    reply.send({data: todos})
+})
+
+app.post('/tasks', async (req: FastifyRequest<{Body: CreateTodoRequest}>, reply: FastifyReply) => {
     const { title, description } = req.body
 
    const todo = await createTodo({title, description})
 
-   rep.status(201).send(todo)
+   reply.status(201).send(todo)
 })
 
 app.listen({
