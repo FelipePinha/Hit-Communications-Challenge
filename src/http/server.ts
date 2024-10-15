@@ -1,10 +1,11 @@
 import fastify from "fastify";
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { CreateTodoRequest, DeleteTodoRequest, UpdateTodoRequest } from "../types/request";
+import { CreateTodoRequest, DeleteTodoRequest, MarkAsCompletedRequest, UpdateTodoRequest } from "../types/request";
 import { createTodo } from "../functions/create-todo";
 import { listTodos } from "../functions/list-todos";
 import { deleteTodo } from "../functions/delete-todo";
 import { updateTodo } from "../functions/update-todo";
+import { completeTodo } from "../functions/complete-todo";
 
 const app = fastify()
 
@@ -35,6 +36,14 @@ app.delete('/tasks/:id', async (req: FastifyRequest<{Params: DeleteTodoRequest}>
     const { id } = req.params
 
     await deleteTodo({id})
+})
+
+app.patch('/tasks/:id/complete', async (req: FastifyRequest<{Params: MarkAsCompletedRequest}>, reply: FastifyReply) => {
+    const { id } = req.params
+
+    const todo = await completeTodo({id})
+
+    reply.send(todo)
 })
 
 app.listen({

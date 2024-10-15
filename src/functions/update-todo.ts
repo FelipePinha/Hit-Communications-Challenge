@@ -4,7 +4,7 @@ import { tasks } from '../db/schema'
 import { UpdateTodoRequest } from "../types/request";
 
 export async function updateTodo({id, title, description}: UpdateTodoRequest) {
-    if(!id || !title || !description) {
+    if(!title || !description) {
         throw new Error('Todos os campos devem estar preenchidos')
     }
 

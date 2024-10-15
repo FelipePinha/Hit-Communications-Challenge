@@ -12,3 +12,7 @@ export interface UpdateTodoRequest {
 export interface DeleteTodoRequest {
     id: string
 }
+
+export interface MarkAsCompletedRequest {
+    id: string
+}
