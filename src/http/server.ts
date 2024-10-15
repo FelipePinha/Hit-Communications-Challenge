@@ -1,9 +1,16 @@
 import fastify from "fastify";
+import type { FastifyRequest } from 'fastify'
+import { CreateTodoRequest } from "../types/request";
+import { createTodo } from "../functions/create-todo";
 
 const app = fastify()
 
-app.get('/ping', async () => {
-    return 'pong'
+app.post('/tasks', async (req: FastifyRequest<{Body: CreateTodoRequest}>, rep) => {
+    const { title, description } = req.body
+
+   const todo = await createTodo({title, description})
+
+   rep.status(201).send(todo)
 })
 
 app.listen({
