@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { CreateTodoRequest } from "../../../types/request";
+import { TodoRequest } from "../../../types/request";
 import { updateTodo } from "../../../functions/update-todo";
 
 export function updateTodoRoute(app: FastifyInstance) {
-    app.put('/tasks/:id', async (req: FastifyRequest<{Params: {id: string}, Body: CreateTodoRequest}>, reply: FastifyReply) => {
+    app.put('/tasks/:id', async (req: FastifyRequest<{Params: {id: string}, Body: TodoRequest}>, reply: FastifyReply) => {
         const { id } = req.params
         const { title, description } = req.body
     

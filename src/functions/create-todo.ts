@@ -1,8 +1,8 @@
 import { db } from "../db";
 import { tasks } from '../db/schema'
-import { CreateTodoRequest } from "../types/request";
+import { TodoRequest } from "../types/request";
 
-export async function createTodo({title, description}: CreateTodoRequest) {
+export async function createTodo({title, description}: TodoRequest) {
     if(!title || !description) {
         throw new Error('Todos os campos devem ser preenchidos!')
     }
